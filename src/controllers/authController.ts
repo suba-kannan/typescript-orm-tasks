@@ -10,7 +10,7 @@ const employeeRepository = AppDataSource.getRepository(Employee);
 export class AuthController {
     async register(req: Request, res: Response): Promise<void> {
         try {
-            const { name, email, password, role } = req.body;
+            const { firstName,lastName, email, password, role } = req.body;
 
             // Check if email is already registered
             const existingEmployee = await employeeRepository.findOne({ where: { email } });
@@ -23,7 +23,7 @@ export class AuthController {
             const hashedPassword = await bcrypt.hash(password, 10);
 
             // Create new employee
-            const employee = employeeRepository.create({ name, email, password: hashedPassword, role });
+            const employee = employeeRepository.create({ firstName,lastName, email, password: hashedPassword, role });
             
             // Validate entity before saving
             const errors = await validate(employee);

@@ -13,6 +13,6 @@ app.use('/auth', authRoutes);
 AppDataSource.initialize()
     .then(() => {
         console.log('Database connected');
-        app.listen(5000, () => console.log('Server running on port 5000'));
+        app.listen(3000, () => console.log('Server running on port 3000'));
     })
     .catch((error: any) => console.log(error));

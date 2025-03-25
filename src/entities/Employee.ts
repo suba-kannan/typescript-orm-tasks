@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
-import { IsEmail, Length } from 'class-validator';
+import { Entity, PrimaryGeneratedColumn, Column,BeforeInsert } from 'typeorm';
+import bcrypt from 'bcryptjs';
+import { IsEmail } from 'class-validator';
 
 @Entity()
 export class Employee {
@@ -7,8 +8,10 @@ export class Employee {
     id: number;
 
     @Column()
-    @Length(3, 50)
-    name: string;
+    firstName: string;
+
+    @Column()
+    lastName: string;
 
     @Column({ unique: true })
     @IsEmail()
@@ -19,6 +22,35 @@ export class Employee {
 
     @Column({ default: 'employee' }) // Default role
     role: string;
-    firstName: any;
-    lastName: any;
+
+    @BeforeInsert()
+    async hashPassword() {
+        this.password = await bcrypt.hash(this.password, 10);
+    }
+    
 }
+// import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert } from 'typeorm';
+// import bcrypt from 'bcryptjs';
+
+// @Entity()
+// export class Employee {
+//     @PrimaryGeneratedColumn("increment")
+//     id: number;
+
+//     @Column()
+//     firstName: string;
+
+//     @Column()
+//     lastName: string;
+
+//     @Column({ unique: true }) // Ensure unique emails
+//     email: string;
+
+//     @Column()
+//     password: string;
+    
+//     @BeforeInsert()
+//     async hashPassword() {
+//         this.password = await bcrypt.hash(this.password, 10);
+//     }
+// }
