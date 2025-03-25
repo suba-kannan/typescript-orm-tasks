@@ -1,0 +1,35 @@
+{
+  "name": "library-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "createMigrate": "npx typeorm-ts-node-commonjs migration:generate -d src/config/data-source.ts",
+    "runmigration": "npx typeorm-ts-node-commonjs migration:run -d src/config/data-source.ts",
+    "revert": "npx typeorm-ts-node-commonjs migration:revert -d src/config/data-source.ts",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/server.ts",
+    "seed": "ts-node src/seeders/seeder.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "class-validator": "^0.14.1",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.14.0",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.21"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/express": "^5.0.1",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/node": "^22.13.10",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2"
+  }
+}
