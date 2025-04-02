@@ -1,56 +1,34 @@
-import { Entity, PrimaryGeneratedColumn, Column,BeforeInsert } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BeforeUpdate } from 'typeorm';
 import bcrypt from 'bcryptjs';
 import { IsEmail } from 'class-validator';
 
 @Entity()
 export class Employee {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    firstName: string;
+  @Column()
+  name: string;
 
-    @Column()
-    lastName: string;
+  @Column({ unique: true })
+  @IsEmail()
+  email: string;
 
-    @Column({ unique: true })
-    @IsEmail()
-    email: string;
+  @Column()
+  password: string;
 
-    @Column()
-    password: string;
+  @Column({ default: 'employee' }) 
+  role: string;
 
-    @Column({ default: 'employee' }) // Default role
-    role: string;
-
-    @BeforeInsert()
-    async hashPassword() {
-        this.password = await bcrypt.hash(this.password, 10);
+  @BeforeInsert()
+  @BeforeUpdate()
+  async hashPassword() {
+    if (this.password && !this.password.startsWith("$2b$")) {
+      this.password = await bcrypt.hash(this.password, 10);
     }
-    
+  }
+
+  async comparePassword(plainText: string): Promise<boolean> {
+    return bcrypt.compare(plainText, this.password);
+  }
 }
-// import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert } from 'typeorm';
-// import bcrypt from 'bcryptjs';
-
-// @Entity()
-// export class Employee {
-//     @PrimaryGeneratedColumn("increment")
-//     id: number;
-
-//     @Column()
-//     firstName: string;
-
-//     @Column()
-//     lastName: string;
-
-//     @Column({ unique: true }) // Ensure unique emails
-//     email: string;
-
-//     @Column()
-//     password: string;
-    
-//     @BeforeInsert()
-//     async hashPassword() {
-//         this.password = await bcrypt.hash(this.password, 10);
-//     }
-// }

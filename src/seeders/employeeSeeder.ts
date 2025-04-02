@@ -8,9 +8,9 @@ export const employeeSeeder = async () => {
     const employeeRepository = AppDataSource.getRepository(Employee);
 
     const employees = [
-      { id:1,firstName: 'Camilo', lastName: 'Paul', email: 'camilo@example.com', password:"123" },
-      { id:2,firstName: 'Kelvin', lastName: 'Hunter', email: 'kelvin@example.com',password:"143" },
-      { id:3,firstName: 'Lara', lastName: 'Young', email: 'lara@example.com',password:"345" },
+      { id:1,firstName: 'Camilo', lastName: 'Paul', email: 'camilo@example.com', password:"123", role:"employee" },
+      { id:2,firstName: 'Kelvin', lastName: 'Hunter', email: 'kelvin@example.com',password:"143", role:"employee" },
+      { id:3,firstName: 'Lara', lastName: 'Young', email: 'lara@example.com',password:"345",role:"admin" },
     ];
 
     // Save employees to the database
